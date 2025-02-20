@@ -1,0 +1,21 @@
+import serial
+
+# Initialize LIN communication
+linSerial = serial.Serial('/dev/serial0', baudrate=9600, timeout=1)
+
+print("Master Ready")
+
+try:
+    while True:
+        if linSerial.in_waiting > 0:
+            message = linSerial.readline().decode('utf-8').strip()
+            print(f"Received: {message}")  # Print the received message from Slave 1
+
+            # Route the message to Slave 2
+            if message == "LED_ON" or message == "LED_OFF":
+                linSerial.write((message + "\n").encode('utf-8'))
+                print(f"Routed: {message}")
+
+except KeyboardInterrupt:
+    print("\nExiting program")
+    linSerial.close()
