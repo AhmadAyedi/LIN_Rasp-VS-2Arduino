@@ -29,7 +29,6 @@ void loop() {
         Serial.println("Received: " + message);
 
         if (message == "toggle_led") {
-            // Toggle the LED state
             ledState = !ledState;
             digitalWrite(LED_PIN, ledState);
             Serial.println("LED Toggled");
